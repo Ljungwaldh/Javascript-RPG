@@ -18,10 +18,8 @@ const attack = () => {
     printToScreen();
 
     if (isGameOver(opponent.health)){
-        gameMessage.innerText = "Player Won Fight"
-        attackButton.hidden = true;
-        restartButton.hidden = false;
-        return;
+            endGame("Player Won Fight")
+            return;
     }
 
     attackButton.disabled = true;
@@ -33,14 +31,18 @@ const attack = () => {
     printToScreen();
 
     if (isGameOver(player.health)){
-        gameMessage.innerText = "Opponent Won Fight"
-        attackButton.hidden = true;
-        restartButton.hidden = false;
+        endGame("Opponent Won Fight")
         return;
     }
     attackButton.disabled = false;
     }, 250)
     
+}
+
+const endGame = (message) => {
+    document.getElementById('game-message').innerText = message;
+    document.getElementById('attack-button').hidden = true;
+    document.getElementById('restart-button').hidden = false;
 }
 
 const determineAttack = (power) => {
@@ -49,6 +51,17 @@ const determineAttack = (power) => {
 
 const isGameOver = (health) => {
     return health <= 0;
+}
+
+const restart = () => {
+    let attackButton = document.getElementById('attack-button');
+    player.health = 100;
+    opponent.health = 100;
+    document.getElementById('game-message').innerText = "";
+    attackButton.disabled = false;
+    attackButton.hidden = false;
+    document.getElementById('restart-button').hidden = true;
+    printToScreen();
 }
 
 const printToScreen = () => {
